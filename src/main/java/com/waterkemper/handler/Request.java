@@ -13,19 +13,19 @@ public class Request implements Runnable {
     public void run()  {
         System.out.println("""
                     Running task for socket %s
-                    """.formatted(socket.getPort()));
+                    """.formatted(socket.getLocalPort()));
 
         try {
-            var buffer = new Scanner(socket.getInputStream());
-            while (buffer.hasNextLine()) {
-                System.out.println(buffer.nextLine());
+            var inputStream = socket.getInputStream();
+            int bytea;
+            while ((bytea = inputStream.read()) != -1) {
+                System.out.print(new String(new byte[]{(byte)bytea}));
             }
-            Thread.sleep(10000);
+
+            socket.close();
+            System.out.println("Socket closed.");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        System.out.println("Finishing task from port %s".formatted(socket.getPort()));
-
     }
 }

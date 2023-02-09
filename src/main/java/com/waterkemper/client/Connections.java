@@ -19,7 +19,7 @@ public class Connections {
         var scanner = new Scanner(System.in);
 
         var command = scanner.nextLine();
-
+        writable.println(command);
         scanner.close();
         writable.close();
         socket.close();

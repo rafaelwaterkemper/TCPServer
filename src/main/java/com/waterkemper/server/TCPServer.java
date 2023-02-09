@@ -17,10 +17,14 @@ public class TCPServer {
 
         while (true) {
             var socket = server.accept();
+            System.out.println("local port -> " + socket.getLocalPort());
+            System.out.println("remote port -> " + socket.getPort());
+            System.out.println("local socket address -> " + socket.getLocalSocketAddress());
+            System.out.println("remote socket address -> " + socket.getRemoteSocketAddress());
             System.out.printf("""
                     Accepting new socket on port %s
-                    """, socket.getPort());
-            new Thread(new Request(socket)).start();
+                    """, socket.getLocalPort());
+            new Thread(new Request(socket), "thread-rafa".concat(""+socket.getPort())).start();
         }
     }
 }
